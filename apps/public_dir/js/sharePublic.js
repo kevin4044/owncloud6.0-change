@@ -4,7 +4,7 @@
 
 var PublicShare = {
     showDropDown:function (itemType, appendTo) {
-
+        var html = '<div id="dropdown" class="drop" data-item-type="'+itemType+'" data-item-source="'+itemSource+'">';
     }
 }
 
