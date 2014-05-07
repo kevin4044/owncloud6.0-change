@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<info>
+    <id>public_dir</id>
+    <name>Just 资料库</name>
+    <description>Just 共享资料库</description>
+    <version>0.1</version>
+    <licence>AGPL</licence>
+    <author>Kevin Wang</author>
+    <require>5</require>
+    <default_enable/>
+</info>
