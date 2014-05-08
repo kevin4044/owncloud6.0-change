@@ -4,7 +4,24 @@
 
 var PublicShare = {
     dropdownshown:false,
-    showDropDown:function (itemType, appendTo, src_dir) {
+    submit:function (itemType, src_dir, filename){
+        var dst_dir = $('#data-dst-dir').val();
+        console.log('filename');
+        console.log(filename);
+        $.post(
+            OC.filePath('public_dir', 'ajax', 'link.php'),
+            {
+                data_dir:src_dir,
+                data_type:itemType,
+                dst_dir:dst_dir,
+                file_name:filename
+            },
+            function(data) {
+                console.log(data);
+            }
+        );
+    },
+    showDropDown:function (itemType, appendTo, src_dir,filename) {
 
         if (this.dropdownshown === true) {
             $('div#dropdown').remove();
@@ -16,14 +33,17 @@ var PublicShare = {
             +itemType+'" data-item-dir="'+src_dir+'">';
         var dropDownEl;
 
-        html += '<label for="data-src-dir">目标文件夹</label>';
+        html += '<form >'
+        html += '<label for="data-dst-dir">目标文件夹</label>';
         html += '</br>';
-        html += '<input id="data-src-dir" type="text" />';
+        html += '<input id="data-dst-dir" type="text" />';
         html += '<img id="dir-toggle" class="svg" src="/core/img/actions/caret.png"/>';
 
         html += '<br/>';
         html += '<textarea style="display: none" id="dir-selecter"></textarea>';
-        html += '<button type="submit">共享至资料库</button>';
+        html += '<button id="share_public" type="button">共享至资料库</button>';
+
+        html += '</form>';
 
         html += '</div>';
 
@@ -33,6 +53,11 @@ var PublicShare = {
         $('#dir-toggle').click(function(){
             $('#dir-selecter').toggle();
         })
+
+        $('#share_public').click(function() {
+            PublicShare.submit(itemType,src_dir,filename);
+        });
+
 
         this.dropdownshown = true;
     }
@@ -64,7 +89,7 @@ $(document).ready(function (){
                 }
                 var appendTo = $(tr).find('td.filename');
 
-                PublicShare.showDropDown(itemType, appendTo, src_dir);
+                PublicShare.showDropDown(itemType, appendTo, src_dir, filename);
             }
         )
     }
