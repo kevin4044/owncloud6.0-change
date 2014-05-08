@@ -34,9 +34,9 @@ $(document).ready(function() {
 			if (OC.Share.droppedDown) {
 				if ($(tr).data('id') != $('#dropdown').attr('data-item-source')) {
 					OC.Share.hideDropDown(function () {
-						$(tr).addClass('mouseOver');
-						OC.Share.showDropDown(itemType, $(tr).data('id'), appendTo, true, possiblePermissions, filename);
 					});
+                    $(tr).addClass('mouseOver');
+                    OC.Share.showDropDown(itemType, $(tr).data('id'), appendTo, true, possiblePermissions, filename);
 				} else {
 					OC.Share.hideDropDown();
 				}
