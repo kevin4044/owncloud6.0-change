@@ -24,6 +24,9 @@ $user = OC_User::getUser();
 // Make breadcrumb
 $breadcrumb = \OCA\Files\Helper::makeBreadcrumb($dir);
 $files = \OCA\Files\Helper::getFiles($dir);
+$files[] = PD_Model::get_dir_content($dir);
+print_r($files);
+exit;
 
 // make breadcrumb und filelist markup
 $list = new OCP\Template('files', 'part.list', '');
