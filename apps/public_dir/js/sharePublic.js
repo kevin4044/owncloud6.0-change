@@ -77,9 +77,9 @@ $(document).ready(function (){
             OC.imagePath('core', 'actions/share'),
             function(filename) {
                 if ($('#dir').val() == '/') {
-                    var src_dir = $('#dir').val() + filename;
+                    var src_dir = $('#dir').val();
                 } else {
-                    var src_dir = $('#dir').val() + '/' + filename;
+                    var src_dir = $('#dir').val() + '/';
                 }
                 var tr = FileList.findFileEl(filename);
                 if ($(tr).data('type') == 'dir') {
