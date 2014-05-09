@@ -92,5 +92,16 @@ $(document).ready(function (){
                 PublicShare.showDropDown(itemType, appendTo, src_dir, filename);
             }
         )
+
+        //first cancle default download function
+/*        unset(FileActions.actions['all']['Download']);
+        FileActions.register('file', 'Download',OC.PERMISSION_READ
+            , function() {
+                return OC.imagePath('core', 'actions/download');
+            },function(filename) {
+                alert(filename);
+            }
+        );*/
+
     }
 });

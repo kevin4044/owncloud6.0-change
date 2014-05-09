@@ -72,6 +72,7 @@ $fileHeader = (!isset($files) or count($files) > 0);
 $emptyContent = ($isCreatable and !$fileHeader) or $ajaxLoad;
 //Page print
 OCP\Util::addscript('files', 'fileactions');
+OCP\Util::addScript('public_dir', 'public_fileaction');
 OCP\Util::addscript('files', 'files');
 OCP\Util::addscript('files', 'keyboardshortcuts');
 $tmpl = new OCP\Template('files', 'index', 'user');

@@ -182,28 +182,28 @@ $(document).ready(function () {
 	
 	$('#fileList').trigger(jQuery.Event("fileActionsReady"));
 
-});
-
-FileActions.register('all', 'Delete', OC.PERMISSION_DELETE, function () {
-	return OC.imagePath('core', 'actions/delete');
-}, function (filename) {
-	FileList.do_delete(filename);
-	$('.tipsy').remove();
-});
+    FileActions.register('all', 'Delete', OC.PERMISSION_DELETE, function () {
+        return OC.imagePath('core', 'actions/delete');
+    }, function (filename) {
+        FileList.do_delete(filename);
+        $('.tipsy').remove();
+    });
 
 // t('files', 'Rename')
-FileActions.register('all', 'Rename', OC.PERMISSION_UPDATE, function () {
-	return OC.imagePath('core', 'actions/rename');
-}, function (filename) {
-	FileList.rename(filename);
+    FileActions.register('all', 'Rename', OC.PERMISSION_UPDATE, function () {
+        return OC.imagePath('core', 'actions/rename');
+    }, function (filename) {
+        FileList.rename(filename);
+    });
+
+    FileActions.register('dir', 'Open', OC.PERMISSION_READ, '', function (filename) {
+        var dir = $('#dir').val() || '/';
+        if (dir !== '/') {
+            dir = dir + '/';
+        }
+        FileList.changeDirectory(dir + filename);
+    });
+
+    FileActions.setDefault('dir', 'Open');
 });
 
-FileActions.register('dir', 'Open', OC.PERMISSION_READ, '', function (filename) {
-	var dir = $('#dir').val() || '/';
-	if (dir !== '/') {
-		dir = dir + '/';
-	}
-	FileList.changeDirectory(dir + filename);
-});
-
-FileActions.setDefault('dir', 'Open');
