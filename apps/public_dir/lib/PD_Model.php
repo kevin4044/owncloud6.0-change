@@ -50,43 +50,71 @@ class PD_Model {
      */
     private static function get_file_content($user, $src_dir, $file_name)
     {
-        $ret = false;
+        $ret = array();
+
         \OC\Files\Filesystem::getView()->chroot('/' . $user);
+        $path = \OC\Files\Filesystem::normalizePath(\OC\Files\Filesystem::getView()->getRoot() . '/files/' . $src_dir);
+
         /**
          * @var \OC\Files\Storage\Storage $storage
          * @var string $internalPath
          */
-        list($storage, $internalPath) = \OC\Files\Filesystem::resolvePath($src_dir);
-        $cache = $storage->getCache($internalPath);
+        list($storage, $internalPath) = \OC\Files\Filesystem::resolvePath($path);
+/*        echo $user.'</br> path:';
+        echo $path.'</br>';
+        echo $internalPath;
+        echo '</br>';
+        var_dump($storage);
+        exit;*/
+        if ($storage) {
+            $cache = $storage->getCache($internalPath);
 
-        //check if dir is scan completed
-        if ($cache->getStatus($internalPath) < \OC\Files\Cache\Cache::COMPLETE) {
-            $scanner = $storage->getScanner($internalPath);
-            $scanner->scan($internalPath, \OC\Files\Cache\Scanner::SCAN_SHALLOW);
-        } else {
-            $watcher = $storage->getWatcher($internalPath);
-            $watcher->checkUpdate($internalPath);
-        }
-        $fileid = $cache->getId($internalPath);
-        print_r(array($fileid,$internalPath));
-        //fetch file from cache
-        if ($fileid > -1) {
-            $sql = 'SELECT `fileid`, `storage`, `path`, `parent`, `name`, `mimetype`, `mimepart`, `size`, `mtime`,
+            //check if dir is scan completed
+            if ($cache->getStatus($internalPath) < \OC\Files\Cache\Cache::COMPLETE) {
+                $scanner = $storage->getScanner($internalPath);
+                $scanner->scan($internalPath, \OC\Files\Cache\Scanner::SCAN_SHALLOW);
+            } else {
+                $watcher = $storage->getWatcher($internalPath);
+                $watcher->checkUpdate($internalPath);
+            }
+            $fileid = $cache->getId($internalPath);
+            //fetch file from cache
+            if ($fileid > -1) {
+                $sql = 'SELECT `fileid`, `storage`, `path`, `parent`, `name`, `mimetype`, `mimepart`, `size`, `mtime`,
 						   `storage_mtime`, `encrypted`, `unencrypted_size`, `etag`
 					FROM `*PREFIX*filecache` WHERE `parent` = ? and `name` = ? ORDER BY `name` ASC';
-            $result = OC_DB::executeAudited($sql, array($fileid, $file_name));
-            $file = $result->fetchRow();
-            $file['mimetype'] = $cache->getMimetype($file['mimetype']);
-            $file['mimepart'] = $cache->getMimetype($file['mimepart']);
-            if ($file['storage_mtime'] == 0) {
-                $file['storage_mtime'] = $file['mtime'];
-            }
-            if ($file['encrypted'] or ($file['unencrypted_size'] > 0 and $file['mimetype'] === 'httpd/unix-directory')) {
-                $file['encrypted_size'] = $file['size'];
-                $file['size'] = $file['unencrypted_size'];
-            }
-            $ret = $file;
+                $result = OC_DB::executeAudited($sql, array($fileid, $file_name));
+                $file = $result->fetchRow();
+                $file['mimetype'] = $cache->getMimetype($file['mimetype']);
+                $file['mimepart'] = $cache->getMimetype($file['mimepart']);
+                if ($file['storage_mtime'] == 0) {
+                    $file['storage_mtime'] = $file['mtime'];
+                }
+                if ($file['encrypted']
+                    or ($file['unencrypted_size'] > 0
+                        and $file['mimetype'] === 'httpd/unix-directory')) {
+                    $file['encrypted_size'] = $file['size'];
+                    $file['size'] = $file['unencrypted_size'];
+                }
+                $file['type'] = 'file';
+                $file['permission'] = \OCP\PERMISSION_READ;
+                $file['base'] = $file_name;
+                $file['date'] = \OCP\Util::formatDate($file['mtime']);
+                if ($file['type'] === 'file') {
+                    $fileinfo = pathinfo($file['name']);
+                    $file['basename'] = $fileinfo['filename'];
+                    if (!empty($fileinfo['extension'])) {
+                        $file['extension'] = '.' . $fileinfo['extension'];
+                    } else {
+                        $file['extension'] = '';
+                    }
+                }
+                $file['directory'] = $src_dir;
+                $file['isPreviewAvailable'] = \OC::$server->getPreviewManager()->isMimeSupported($file['mimetype']);
+                $file['icon'] = \OCA\Files\Helper::determineIcon($file);
+                $ret = $file;
 
+            }
         }
         return $ret;
     }

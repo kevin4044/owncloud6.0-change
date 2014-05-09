@@ -45,6 +45,7 @@ class Legacy {
 			return $this->cacheHasItems;
 		}
 		try {
+            //by kevin:this table doesn't exist
 			$query = \OC_DB::prepare('SELECT `id` FROM `*PREFIX*fscache` WHERE `user` = ?',1);
 		} catch (\Exception $e) {
 			$this->cacheHasItems = false;
