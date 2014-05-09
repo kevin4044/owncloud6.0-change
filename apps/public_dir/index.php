@@ -30,6 +30,15 @@ $files = \OCA\Files\Helper::getFiles($dir);
 $files = array_merge($files, PD_Model::get_dir_content($dir));
 
 
+if (OC_User::isAdminUser($user)) {
+    $permissions = \OCA\Files\Helper::getDirPermissions($dir);
+} else {
+    $permissions = \OCP\PERMISSION_READ;//read only for all users
+    //todo:方法有点太搓了
+    foreach ($files as &$file) {
+        $file['permissions'] = \OCP\PERMISSION_READ;
+    }
+}
 // make breadcrumb und filelist markup
 $list = new OCP\Template('files', 'part.list', '');
 $list->assign('files', $files);
@@ -40,11 +49,6 @@ $breadcrumbNav = new OCP\Template('files', 'part.breadcrumb', '');
 $breadcrumbNav->assign('breadcrumb', $breadcrumb);
 $breadcrumbNav->assign('baseURL', OCP\Util::linkTo('public_dir', 'index.php') . '?dir=');
 
-if (OC_User::isAdminUser($user)) {
-    $permissions = \OCA\Files\Helper::getDirPermissions($dir);
-} else {
-    $permissions = \OCP\PERMISSION_READ;//read only for all users
-}
 
 // information about storage capacities
 $storageInfo=OC_Helper::getStorageInfo($dir);
@@ -89,7 +93,7 @@ $tmpl->assign("encryptedFiles", \OCP\Util::encryptedFiles());
 $tmpl->assign("mailNotificationEnabled", \OC_Appconfig::getValue('core', 'shareapi_allow_mail_notification', 'yes'));
 $tmpl->assign("allowShareWithLink", \OC_Appconfig::getValue('core', 'shareapi_allow_links', 'yes'));
 $tmpl->assign("encryptionInitStatus", $encryptionInitStatus);
-$tmpl->assign('disableSharing', false);
+$tmpl->assign('disableSharing', true);
 $tmpl->assign('ajaxLoad', $ajaxLoad);
 $tmpl->assign('emptyContent', $emptyContent);
 $tmpl->assign('fileHeader', $fileHeader);

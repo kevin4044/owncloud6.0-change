@@ -60,12 +60,6 @@ class PD_Model {
          * @var string $internalPath
          */
         list($storage, $internalPath) = \OC\Files\Filesystem::resolvePath($path);
-/*        echo $user.'</br> path:';
-        echo $path.'</br>';
-        echo $internalPath;
-        echo '</br>';
-        var_dump($storage);
-        exit;*/
         if ($storage) {
             $cache = $storage->getCache($internalPath);
 
@@ -112,6 +106,7 @@ class PD_Model {
                 $file['directory'] = $src_dir;
                 $file['isPreviewAvailable'] = \OC::$server->getPreviewManager()->isMimeSupported($file['mimetype']);
                 $file['icon'] = \OCA\Files\Helper::determineIcon($file);
+                $file['permissions'] = \OCP\PERMISSION_READ;
                 $ret = $file;
 
             }
