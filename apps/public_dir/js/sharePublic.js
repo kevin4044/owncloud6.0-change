@@ -65,12 +65,12 @@ var PublicShare = {
 
 
 $(document).ready(function (){
-    var disablePublic = $('#disablePublic').data('status');
+    var sharePublic = $('#sharePublic').data('status');
     //not show yet,why?
     console.log('disablePublic');
-    console.log(disablePublic);
+    console.log(sharePublic);
     if (typeof FileActions !== 'undefined'
-        && !disablePublic) {
+        && sharePublic === 'true') {
         FileActions.register('all',
             'public',
             OC.PERMISSION_READ,

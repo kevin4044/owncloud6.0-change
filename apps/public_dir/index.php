@@ -7,7 +7,10 @@
  */
 // Load the files we need
 OCP\Util::addStyle('files', 'files');
-OCP\Util::addStyle('files', 'upload');
+OCP\Util::addscript('files', 'jquery.iframe-transport');
+OCP\Util::addscript('files', 'jquery.fileupload');
+OCP\Util::addscript('files', 'jquery-visibility');
+OCP\Util::addscript('files', 'filelist');
 
 OCP\App::setActiveNavigationEntry('just_index');
 // TODO: This dir should be a marco or sth.
@@ -64,6 +67,9 @@ $isCreatable = \OC\Files\Filesystem::isCreatable($dir . '/');
 $fileHeader = (!isset($files) or count($files) > 0);
 $emptyContent = ($isCreatable and !$fileHeader) or $ajaxLoad;
 //Page print
+OCP\Util::addscript('files', 'fileactions');
+OCP\Util::addscript('files', 'files');
+OCP\Util::addscript('files', 'keyboardshortcuts');
 $tmpl = new OCP\Template('files', 'index', 'user');
 $tmpl->assign('fileList', $list->fetchPage());
 $tmpl->assign('breadcrumb', $breadcrumbNav->fetchPage());
@@ -87,5 +93,6 @@ $tmpl->assign('disableSharing', false);
 $tmpl->assign('ajaxLoad', $ajaxLoad);
 $tmpl->assign('emptyContent', $emptyContent);
 $tmpl->assign('fileHeader', $fileHeader);
+$tmpl->assign('sharepublic', false);
 
 $tmpl->printPage();
