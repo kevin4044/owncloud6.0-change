@@ -148,7 +148,7 @@ if ($needUpgrade) {
 	$tmpl->assign('ajaxLoad', $ajaxLoad);
 	$tmpl->assign('emptyContent', $emptyContent);
 	$tmpl->assign('fileHeader', $fileHeader);
-    $tmpl->assign('sharepublic', true);
+    $tmpl->assign('sharePublic', true);
 
 	$tmpl->printPage();
 }

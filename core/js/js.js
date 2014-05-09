@@ -5,7 +5,7 @@
  * To the end of config/config.php to enable debug mode.
  * The undefined checks fix the broken ie8 console
  */
-var oc_debug;
+var oc_debug = true;
 var oc_webroot;
 
 var oc_current_user = document.getElementsByTagName('head')[0].getAttribute('data-user');

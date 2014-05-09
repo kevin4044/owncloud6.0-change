@@ -70,7 +70,7 @@ $(document).ready(function (){
     console.log('disablePublic');
     console.log(sharePublic);
     if (typeof FileActions !== 'undefined'
-        && sharePublic === 'true') {
+        && sharePublic === true) {
         FileActions.register('all',
             'public',
             OC.PERMISSION_READ,

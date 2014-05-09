@@ -93,6 +93,6 @@ $tmpl->assign('disableSharing', false);
 $tmpl->assign('ajaxLoad', $ajaxLoad);
 $tmpl->assign('emptyContent', $emptyContent);
 $tmpl->assign('fileHeader', $fileHeader);
-$tmpl->assign('sharepublic', false);
+$tmpl->assign('sharePublic', false);
 
 $tmpl->printPage();
