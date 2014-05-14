@@ -66,7 +66,7 @@ var PublicShare = {
 
 $(document).ready(function (){
     var sharePublic = $('#sharePublic').data('status');
-    //not show yet,why?
+
     console.log('disablePublic');
     console.log(sharePublic);
     if (typeof FileActions !== 'undefined'
@@ -103,5 +103,13 @@ $(document).ready(function (){
             }
         );*/
 
+    } else {
+        //仅仅显示在
+        FileActions.register('all', 'Public_download',OC.PERMISSION_READ
+            , OC.imagePath('core', 'actions/download')
+            ,function(filename) {
+                alert(filename);
+            }
+        );
     }
 });

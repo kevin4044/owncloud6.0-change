@@ -169,7 +169,11 @@ $(document).ready(function () {
 		var downloadScope = 'file';
 	}
 
-	if (typeof disableDownloadActions == 'undefined' || !disableDownloadActions) {
+    var sharePublic = $('#sharePublic').data('status');
+
+    if ((typeof disableDownloadActions == 'undefined' || !disableDownloadActions)
+        && sharePublic //防止在public页面上出现普通的下载。
+        ) {
 		FileActions.register(downloadScope, 'Download', OC.PERMISSION_READ, function () {
 			return OC.imagePath('core', 'actions/download');
 		}, function (filename) {
@@ -205,5 +209,5 @@ $(document).ready(function () {
     });
 
     FileActions.setDefault('dir', 'Open');
-});
+    });
 

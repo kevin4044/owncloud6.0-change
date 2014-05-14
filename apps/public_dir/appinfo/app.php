@@ -8,6 +8,7 @@
 OC::$CLASSPATH['PD_Model'] = 'apps/public_dir/lib/PD_Model.php';
 
 OC_Util::addScript('public_dir', 'sharePublic');
+
 OC_App::addNavigationEntry( array(
     'id' => 'just_index',
     'order' => 2,
