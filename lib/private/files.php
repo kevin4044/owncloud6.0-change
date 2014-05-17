@@ -55,7 +55,7 @@ class OC_Files {
 			$files = $files[0];
 		}
 
-		if (is_array($files)) {
+		if (is_array($files)) {//多个文件
 			self::validateZipDownload($dir, $files);
 			$executionTime = intval(ini_get('max_execution_time'));
 			set_time_limit(0);
@@ -87,7 +87,7 @@ class OC_Files {
 			}
 			
 			set_time_limit($executionTime);
-		} elseif (\OC\Files\Filesystem::is_dir($dir . '/' . $files)) {
+		} elseif (\OC\Files\Filesystem::is_dir($dir . '/' . $files)) {//目录
 			self::validateZipDownload($dir, $files);
 			$executionTime = intval(ini_get('max_execution_time'));
 			set_time_limit(0);
@@ -105,7 +105,7 @@ class OC_Files {
 			}
 			$name = $files . '.zip';
 			set_time_limit($executionTime);
-		} else {
+		} else {//单文件
 			$zip = false;
 			$filename = $dir . '/' . $files;
 			$name = $files;

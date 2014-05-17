@@ -107,6 +107,7 @@ class PD_Model {
                 $file['isPreviewAvailable'] = \OC::$server->getPreviewManager()->isMimeSupported($file['mimetype']);
                 $file['icon'] = \OCA\Files\Helper::determineIcon($file);
                 $file['permissions'] = \OCP\PERMISSION_READ;
+                $file['owner'] = $user;
                 $ret = $file;
 
             }

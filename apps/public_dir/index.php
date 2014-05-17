@@ -7,6 +7,8 @@
  */
 // Load the files we need
 OCP\Util::addStyle('files', 'files');
+OCP\Util::addStyle('files', 'upload');
+
 OCP\Util::addscript('files', 'jquery.iframe-transport');
 OCP\Util::addscript('files', 'jquery.fileupload');
 OCP\Util::addscript('files', 'jquery-visibility');
@@ -40,7 +42,7 @@ if (OC_User::isAdminUser($user)) {
     }
 }
 // make breadcrumb und filelist markup
-$list = new OCP\Template('files', 'part.list', '');
+$list = new OCP\Template('public_dir', 'part.list', '');
 $list->assign('files', $files);
 $list->assign('baseURL', OCP\Util::linkTo('public_dir', 'index.php') . '?dir=');
 $list->assign('downloadURL', OCP\Util::linkToRoute('download', array('file' => '/')));
@@ -72,7 +74,6 @@ $fileHeader = (!isset($files) or count($files) > 0);
 $emptyContent = ($isCreatable and !$fileHeader) or $ajaxLoad;
 //Page print
 OCP\Util::addscript('files', 'fileactions');
-OCP\Util::addScript('public_dir', 'public_fileaction');
 OCP\Util::addscript('files', 'files');
 OCP\Util::addscript('files', 'keyboardshortcuts');
 $tmpl = new OCP\Template('files', 'index', 'user');

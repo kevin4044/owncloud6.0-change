@@ -108,7 +108,9 @@ $(document).ready(function (){
         FileActions.register('all', 'Public_download',OC.PERMISSION_READ
             , OC.imagePath('core', 'actions/download')
             ,function(filename) {
-                alert(filename);
+                var tr = FileList.findFileEl(filename);
+                var user_name = $(tr).attr('data-owner');
+                window.location = OC.filePath('public_dir', '', 'download.php') + '?file=' + encodeURIComponent(filename) + '&user_name=' + encodeURIComponent(user_name);
             }
         );
     }
