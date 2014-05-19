@@ -207,12 +207,17 @@ var FileList={
 	 * @brief Reloads the file list using ajax call
 	 */
 	reload: function() {
+        //判定是否是公共资料库页面
+        var sharePublic = $('#sharePublic').data('status');
+        var url = sharePublic===true
+            ?OC.filePath('files', 'ajax', 'list.php')
+            :OC.filePath('public_dir', 'ajax', 'list.php');
 		FileList.showMask();
 		if (FileList._reloadCall) {
 			FileList._reloadCall.abort();
 		}
 		FileList._reloadCall = $.ajax({
-			url: OC.filePath('files','ajax','list.php'),
+			url: url,
 			data: {
 				dir : $('#dir').val(),
 				breadcrumb: true

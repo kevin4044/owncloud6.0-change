@@ -173,7 +173,7 @@ class OC_Files {
 		}
 	}
 
-	private static function addSendfileHeader($filename) {
+	public static function addSendfileHeader($filename) {
 		if (isset($_SERVER['MOD_X_SENDFILE_ENABLED'])) {
 			header("X-Sendfile: " . $filename);
  		}
