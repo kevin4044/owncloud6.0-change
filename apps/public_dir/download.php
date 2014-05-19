@@ -69,7 +69,7 @@ if (!is_dir($filepath)) {
 }
 exit();
 
-function zip_add_dir($dir,&$zip)
+function zip_add_dir($dir,$zip)
 {
     \OC\Files\Filesystem::getView()->chroot('/Public');
     $filelist = OC_Files::getDirectoryContent($dir);
@@ -79,16 +79,16 @@ function zip_add_dir($dir,&$zip)
         if(\OC\Files\Filesystem::is_file($file)) {
             $tmpFile=\OC\Files\Filesystem::toTmpFile($file);
             OC_Files::$tmpFiles[]=$tmpFile;
-            $zip->addFile($tmpFile);
+            $zip->addFile($tmpFile, $dir.'/'.$filename);
         }elseif(\OC\Files\Filesystem::is_dir($file)) {
             $zip = zip_add_dir($file, $zip);
         }
     }
 
-    $link_filelist = PD_Model::get_dir_content($dir);
+    $link_filelist = PD_Model::get_dir_content('/'.$dir);
     foreach ($link_filelist as $file) {
-        $each_file = file_path_gen($file['file_name'], $file['owner']);
-        $zip->addFile($each_file);
+        $each_file = OC::$SERVERROOT.'/data/'.$file['owner'].'/'.$file['path'];
+        $zip->addFile($each_file,$dir.'/'.$file['name']);
     }
     return $zip;
 }
