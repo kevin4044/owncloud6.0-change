@@ -10,6 +10,11 @@
 class PD_Model {
     static private $DB_NAME = '`*PREFIX*public_map`';
 
+    static public function get_full_dir($dir)
+    {
+        return OC::$SERVERROOT.'/data/public'.$dir;
+    }
+
     static public function setinto_db($data_dir, $dst_dir, $user, $filename) {
         $query = OC_DB::prepare('INSERT INTO '.self::$DB_NAME.
             '(`uid`, `file_name`, `src_dir`, `public_dir`) '.
