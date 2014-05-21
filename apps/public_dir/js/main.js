@@ -14,13 +14,15 @@ $(document).ready(function() {
     });
 
     //create new folder
-    $('#new li').click(function() {
+    $('#new li p').click(function() {
         if ($('#new_fold').length == 0) {
-            $(this).append('<div id="new_fold">' +
-                '<input type="text" value="新文件夹"/>' +
-                '<input type="button" value="建立" onclick="new_fold()"/>' +
+            $(this).parent().append('<div id="new_fold">' +
+                '<input type="text" value="新文件夹" placeholder="新文件夹"/>' +
+                '<input type="button" value="建立"/>' +
                 '</div>')
+            $('#new_fold input[type=button]').click(new_fold);
         } else {
+            $('#new_fold input[type=button]').unbind('click');
             $('#new_fold').remove();
         }
     });
@@ -38,7 +40,7 @@ function new_fold()
         function(result) {
             if (result.status === 'success') {
                 var date=new Date();
-                FileList.addDir(fold_name, 0, date, hidden);
+                FileList.addDir(fold_name, 0, date, false);
                 var tr = FileList.findFileEl(fold_name);
                 tr.attr('data-id', result.data.id);
             } else {
