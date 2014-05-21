@@ -44,6 +44,8 @@ if($doBreadcrumb) {
 $files = \OCA\Files\Helper::getFiles($dir);
 $files = array_merge($files, PD_Model::get_dir_content($dir));
 
+$user = OC_User::getUser();
+
 //get permission by kevin
 if (OC_User::isAdminUser($user)) {
     $permissions = \OCA\Files\Helper::getDirPermissions($dir);
@@ -59,7 +61,7 @@ $list = new OCP\Template("public_dir", "part.list", "");
 $list->assign('files', $files, false);
 $list->assign('baseURL', $baseUrl, false);
 $list->assign('downloadURL', OCP\Util::linkToRoute('download', array('file' => '/')));
-$list->assign('isPublic', false);
+$list->assign('isPublic', true);
 $data['files'] = $list->fetchPage();
 $data['permissions'] = $permissions;
 

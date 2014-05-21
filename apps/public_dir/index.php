@@ -40,6 +40,7 @@ if (OC_User::isAdminUser($user)) {
     foreach ($files as &$file) {
         $file['permissions'] = \OCP\PERMISSION_READ;
     }
+
 }
 // make breadcrumb und filelist markup
 $list = new OCP\Template('public_dir', 'part.list', '');
@@ -90,7 +91,7 @@ $tmpl->assign('uploadMaxFilesize', $maxUploadFilesize);
 $tmpl->assign('uploadMaxHumanFilesize', OCP\Util::humanFileSize($maxUploadFilesize));
 $tmpl->assign('allowZipDownload', intval(OCP\Config::getSystemValue('allowZipDownload', true)));
 $tmpl->assign('usedSpacePercent', (int)$storageInfo['relative']);
-$tmpl->assign('isPublic', false);
+$tmpl->assign('isPublic', true);
 $tmpl->assign('publicUploadEnabled', $publicUploadEnabled);
 $tmpl->assign("encryptedFiles", \OCP\Util::encryptedFiles());
 $tmpl->assign("mailNotificationEnabled", \OC_Appconfig::getValue('core', 'shareapi_allow_mail_notification', 'yes'));
