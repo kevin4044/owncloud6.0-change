@@ -48,7 +48,7 @@ $user = OC_User::getUser();
 
 //get permission by kevin
 if (OC_User::isAdminUser($user)) {
-    $permissions = \OCA\Files\Helper::getDirPermissions($dir);
+    $permissions = \OCP\PERMISSION_ALL;
 } else {
     $permissions = \OCP\PERMISSION_READ;//read only for all users
     //todo:方法有点太搓了
