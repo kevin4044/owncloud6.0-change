@@ -15,7 +15,7 @@
                 <notnull>true</notnull>
                 <autoincrement>1</autoincrement>
                 <unsigned>true</unsigned>
-                <length>8</length>
+                <length>16</length>
             </field>
             <field>
                 <name>uid</name>
@@ -34,7 +34,7 @@
                 <length>64</length>
             </field>
             <field>
-                <name>src_dir</name>
+                <name>path</name>
                 <type>text</type>
                 <default></default>
                 <notnull>true</notnull>
@@ -42,12 +42,42 @@
                 <length>64</length>
             </field>
             <field>
-                <name>public_dir</name>
-                <type>text</type>
+                <name>is_editable</name>
+                <type>integer</type>
+                <default>true</default>
+                <notnull>true</notnull>
+                <unsigned>true</unsigned>
+                <length>1</length>
+            </field>
+            <field>
+                <name>size</name>
+                <type>integer</type>
+                <default></default>
+                <notnull>true</notnull>
+                <unsigned>true</unsigned>
+                <length>128</length>
+            </field>
+            <field>
+                <name>mtime</name>
+                <type>datetime</type>
+                <notnull>true</notnull>
+                <unsigned>true</unsigned>
+            </field>
+            <field>
+                <name>parent_id</name>
+                <type>integer</type>
                 <default></default>
                 <notnull>true</notnull>
                 <unsigned>true</unsigned>
                 <length>64</length>
+            </field>
+            <field>
+                <name>is_dir</name>
+                <type>integer</type>
+                <default>0</default>
+                <notnull>true</notnull>
+                <unsigned>true</unsigned>
+                <length>1</length>
             </field>
 
         </declaration>

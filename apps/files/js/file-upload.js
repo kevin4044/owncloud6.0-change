@@ -144,7 +144,7 @@ OC.Upload = {
 		}
 		data.submit();
 	},
-	_trace:false, //TODO implement log handler for JS per class?
+	_trace:true, //TODO implement log handler for JS per class?
 	log:function(caption, e, data) {
 		if (this._trace) {
 			console.log(caption);

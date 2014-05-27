@@ -24,7 +24,7 @@
                    value="(max <?php p($_['uploadMaxHumanFilesize']); ?>)">
             <input type="hidden" name="dir" value="<?php p($_['dir']) ?>" id="dir">
             <input type="file" id="file_upload_start" name='files[]'
-                   data-url="<?php print_unescaped(OCP\Util::linkTo('files', 'ajax/upload.php')); ?>" />
+                   data-url="<?php print_unescaped(OCP\Util::linkTo('public_dir', 'ajax/upload.php')); ?>" />
             <a href="#" class="svg icon icon-upload"></a>
         </div>
         <?php if ($_['trash']): ?>

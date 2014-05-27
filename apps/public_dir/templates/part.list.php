@@ -9,18 +9,14 @@ $totalsize = 0; ?>
 	// the older the file, the brighter the shade of grey; days*14
 	$relative_date_color = round((time()-$file['mtime'])/60/60/24*14);
 	if($relative_date_color>160) $relative_date_color = 160;
-	$name = \OCP\Util::encodePath($file['name']);
-	$directory = \OCP\Util::encodePath($file['directory']); ?>
-	<tr data-id="<?php p($file['fileid']); ?>"
+	$name = \OCP\Util::encodePath($file['file_name']);
+	$directory = \OCP\Util::encodePath($file['path']); ?>
+	<tr data-id="<?php p($file['id']); ?>"
 		data-file="<?php p($name);?>"
-		data-type="<?php ($file['type'] == 'dir')?p('dir'):p('file')?>"
+		data-type="<?php ($file['is_dir'] == 1)?p('dir'):p('file')?>"
 		data-mime="<?php p($file['mimetype'])?>"
 		data-size="<?php p($file['size']);?>"
-		data-etag="<?php p($file['etag']);?>"
-		data-permissions="<?php p($file['permissions']); ?>"
-        <?php if (isset($file['owner'])):?>
-        data-owner="<?php p($file['owner']);?>"
-        <?php endif;?>
+		data-writable="<?php p($file['writable']); ?>"
         >
 
 		<?php if(isset($file['isPreviewAvailable']) and $file['isPreviewAvailable']): ?>
@@ -31,10 +27,10 @@ $totalsize = 0; ?>
 		    style="background-image:url(<?php print_unescaped($file['icon']); ?>)"
 			>
 		<?php if(!isset($_['readonly']) || !$_['readonly']): ?>
-			<input id="select-<?php p($file['fileid']); ?>" type="checkbox" />
-			<label for="select-<?php p($file['fileid']); ?>"></label>
+			<input id="select-<?php p($file['id']); ?>" type="checkbox" />
+			<label for="select-<?php p($file['id']); ?>"></label>
 		<?php endif; ?>
-		<?php if($file['type'] == 'dir'): ?>
+		<?php if($file['is_dir'] == 1): ?>
 			<a class="name" href="<?php p(rtrim($_['baseURL'],'/').'/'.trim($directory,'/').'/'.$name); ?>" title="">
 				<span class="nametext">
 					<?php print_unescaped(htmlspecialchars($file['name']));?>
@@ -44,7 +40,7 @@ $totalsize = 0; ?>
 			</a>
 		<?php else: ?>
 			<a class="name" href="<?php p(rtrim($_['downloadURL'],'/').'/'.trim($directory,'/').'/'.$name); ?>">
-				<label class="filetext" title="" for="select-<?php p($file['fileid']); ?>"></label>
+				<label class="filetext" title="" for="select-<?php p($file['id']); ?>"></label>
 				<span class="nametext"><?php print_unescaped(htmlspecialchars($file['basename']));?><span class='extension'><?php p($file['extension']);?></span></span>
 			</a>
 		<?php endif; ?>

@@ -6,6 +6,7 @@
  * Time: 上午9:36
  */
 OC::$CLASSPATH['PD_Model'] = 'apps/public_dir/lib/PD_Model.php';
+OC::$CLASSPATH['PD_Filesys'] = 'apps/public_dir/lib/PD_Filesys.php';
 
 OC_Util::addScript('public_dir', 'sharePublic');
 

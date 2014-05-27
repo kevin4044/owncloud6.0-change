@@ -1,3 +1,6 @@
+<?php
+header('X-Frame-Options: GOFORIT');
+?>
 <!DOCTYPE html>
 <!--[if lt IE 7]><html class="ng-csp ie ie6 lte9 lte8 lte7"><![endif]-->
 <!--[if IE 7]><html class="ng-csp ie ie7 lte9 lte8 lte7"><![endif]-->
